@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function Movie(props) {
-  const [movie, setMovie] = useState();
+  const [movie, setMovie] = useState(null);
+  // im soooo mad rn... the state needed to start null for the whole thing
+  // to work right... that was my waldo i had to find for this project...
+  // words cannot express the burning in my soul but ill controll my
+  // states better in the future...
+  let { id } = useParams()
+  // Change ^^^ that line and use a hook to obtain the :id parameter from the URL 
 
-  let id = 1;
-  // Change ^^^ that line and use a hook to obtain the :id parameter from the URL
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
-      .then(response => {
+      .then(({ data })=> {
         // Study this response with a breakpoint or log statements
         // and set the response data as the 'movie' slice of state
+        setMovie(data)
       })
       .catch(error => {
         console.error(error);
       });
     // This effect should run every time time
     // the `id` changes... How could we do this?
-  }, []);
+    // easily setting the conditional array to be id from the useParam
+  }, [id]);
 
   // Uncomment this only when you have moved on to the stretch goals
   // const saveMovie = evt => { }
 
   if (!movie) {
+    
     return <div>Loading movie information...</div>;
   }
 
