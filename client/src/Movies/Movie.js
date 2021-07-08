@@ -32,8 +32,7 @@ export default function Movie(props) {
   // const saveMovie = evt => { }
 
   if (!movie) {
-    debugger
-    console.log(id)
+    
     return <div>Loading movie information...</div>;
   }
 
